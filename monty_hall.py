@@ -1,8 +1,14 @@
 ##write simple monty hall problem simulation
 import random
 
-def monty_hall_problem(second_choice='switch', n_sim=100):
-    # generate 3 doors
+
+def monty_hall_problem(n_doors=3, decision='switch', n_sim=100):
+    # generate n doors
+    car_idx = random.randint(0, n_doors-1)
+    doors = ['goat'] * n_doors
+    doors[car_idx] = 'car'
+    
+    # final result placeholder
     result = []
 
     for i in range(n_sim):
@@ -19,7 +25,7 @@ def monty_hall_problem(second_choice='switch', n_sim=100):
         other_goat_idx = [i for i, j in doors_dict.items() if i != chosen_door_idx and j == 'goat'][0]
         doors.pop(other_goat_idx)
 
-        if second_choice == 'switch':
+        if decision == 'switch':
             if first_choice == 'goat':
                 result.append('car')
             else:
@@ -32,4 +38,5 @@ def monty_hall_problem(second_choice='switch', n_sim=100):
 
     return car/n_sim
 
-print(monty_hall_problem('switch', 100000))
+print(monty_hall_problem(n_doors=4, decision='switch', n_sim=100000))
+print(monty_hall_problem(n_doors=4, decision='stay', n_sim=100000))
