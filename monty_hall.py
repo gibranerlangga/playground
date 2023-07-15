@@ -3,22 +3,24 @@ import random
 
 
 def monty_hall_problem(n_doors=3, decision='switch', n_sim=100):
-    # generate n doors
-    car_idx = random.randint(0, n_doors-1)
-    doors = ['goat'] * n_doors
-    doors[car_idx] = 'car'
+    if n_doors < 3:
+        raise ValueError('n_doors must be greater than 2')
     
     # final result placeholder
     result = []
 
     for i in range(n_sim):
+        # generate n doors
+        car_idx = random.randint(0, n_doors-1)
+        doors = ['goat'] * n_doors
+        doors[car_idx] = 'car'
+
         # randomize door order
-        doors = ['goat', 'goat', 'car']
         random.shuffle(doors)
         doors_dict = {i: doors[i] for i in range(len(doors))}
 
         # randomly choose a door
-        chosen_door_idx = random.randint(0,2)
+        chosen_door_idx = random.randint(0,n_doors-1)
         first_choice = doors[chosen_door_idx]
 
         # remove the other door with goat
@@ -38,5 +40,5 @@ def monty_hall_problem(n_doors=3, decision='switch', n_sim=100):
 
     return car/n_sim
 
-print(monty_hall_problem(n_doors=4, decision='switch', n_sim=100000))
-print(monty_hall_problem(n_doors=4, decision='stay', n_sim=100000))
+print(monty_hall_problem(n_doors=3, decision='switch', n_sim=100000))
+print(monty_hall_problem(n_doors=3, decision='stay', n_sim=100000))
